@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { v4 } from 'node-uuid';
-
+import Filter from './Filter';
 import AddTask from './AddTask';
 import List from './List';
 
@@ -9,9 +9,11 @@ class App extends Component {
     super();
     this.state = {
       tasks: [],
+      filter: 'ALL',
     }
     this._addTaskOnSubmit = this._addTaskOnSubmit.bind(this);
     this._changeTaskStatus = this._changeTaskStatus.bind(this);
+    this._onChangeFilter = this._onChangeFilter.bind(this);
   }
 
 
@@ -36,6 +38,13 @@ class App extends Component {
       })
     }
 
+  _onChangeFilter(filter){
+    this.setState({
+      filter: filter
+    })
+
+  }
+
     componentDidMount(){
       let storage = JSON.parse(localStorage.getItem('state'));
       if (this.state.tasks.length === 0 && storage !== null){
@@ -52,11 +61,12 @@ class App extends Component {
     }
 
   render(){
-    console.log(this.state.tasks);
+    console.log(this.state.filter);
     return (
       <div>
         <AddTask  addTask={this._addTaskOnSubmit} />
-        <List tasks={this.state.tasks} changeStatus={this._changeTaskStatus} />
+        <List tasks={this.state.tasks} changeStatus={this._changeTaskStatus} filter={this.state.filter} />
+        <Filter onChangeFilter={this._onChangeFilter}/>
       </div>
     )
   }
