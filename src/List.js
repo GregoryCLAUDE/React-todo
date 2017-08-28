@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 
-class List extends Component {
-render(){
-  const rows = this.props.tasks.map(item =>(
-    <li key={item.id}>{item.content}</li>
-  ))
-  return(
-    <ul>
-      {rows}
-    </ul>
-  )
-}
 
-};
+  const rows = ({tasks, changeStatus}) => {
+    return(
+      <ul>
+        {
+          tasks.map(item => (
+            <li key={item.id}
+            className={item.status ? 'done':'todo'}
+            onClick={()=>{changeStatus(item.id)}}
+            >
+            {item.content}
+            </li>
+          ))
+        }
+      </ul>
+    )};
 
-export default List;
+export default rows;

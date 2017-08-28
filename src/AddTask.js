@@ -22,8 +22,10 @@ import React, {Component} from 'react';
      return (
        <form onSubmit={(e) =>{
           e.preventDefault();
-          this.props.addTask(this.state.value)
-          this.setState({value: ""});
+          if(this.state.value.trim()){
+            this.props.addTask(this.state.value);
+          }
+
         }}>
          <div className="inputGroup">
            <label htmlFor="add"> Add task </label>
